@@ -404,19 +404,21 @@ io.on("connection", async (socket) => {
   });
 });
 
-const uri =
-  "mongodb+srv://bobytudu:Paris%40123%23@echomate.xibultj.mongodb.net/echo-mate";
+const uri = `${process.env.mongodb_uri}`;
 mongoose
   .connect(uri)
   .then(() => {
-    console.log("Database connected");
+    console.log("Database connected - ", uri);
   })
   .catch((error) => {
-    console.log(error.message);
+    console.log(`Database connection error: ${error.message}`);
   });
 
 server.listen(port, () => {
-  console.log("Server is running on port: ", port);
+  console.log({
+    server: "Server is running on port: " + port,
+    socket: "Socket is running on port: 3000",
+  });
 });
 server.on("error", onError);
 server.on("listening", onListening);
